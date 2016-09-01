@@ -127,10 +127,7 @@ public class StorageFile {
 
         // create empty file if not found
         } catch (FileNotFoundException fnfe) {
-            final AddressBook empty = new AddressBook();
-            save(empty);
-            System.out.println("File was not found in file path but has been successfully recreated");
-            return empty;
+        	throw new StorageOperationException("File has been deleted");
 
         // other errors
         } catch (IOException ioe) {
@@ -139,6 +136,14 @@ public class StorageFile {
             throw new StorageOperationException("Error parsing file data format");
         } catch (IllegalValueException ive) {
             throw new StorageOperationException("File contains illegal data values; data type constraints not met");
+        }
+        finally{
+        	if (!path.toFile().exists()){
+        		final AddressBook empty = new AddressBook();
+                save(empty);
+                System.out.println("File has been recreated");
+                return empty;
+        	}
         }
     }
 
