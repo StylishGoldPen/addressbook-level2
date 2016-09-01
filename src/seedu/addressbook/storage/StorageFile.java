@@ -129,6 +129,7 @@ public class StorageFile {
         } catch (FileNotFoundException fnfe) {
             final AddressBook empty = new AddressBook();
             save(empty);
+            System.out.println("File was not found in file path but has been successfully recreated");
             return empty;
 
         // other errors
